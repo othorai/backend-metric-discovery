@@ -1,4 +1,3 @@
-#main.py
 from fastapi import FastAPI, Request, HTTPException
 from app.routers import users, metric_discovery
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,8 +6,9 @@ from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-app = FastAPI()
 
+# Create FastAPI app with root_path for ALB path-based routing
+app = FastAPI(root_path="/backend-metric-discovery")
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
@@ -61,6 +61,7 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
+
 # Include your routers
 app.include_router(users.router, prefix="", tags=["Login & Signup"])
 app.include_router(metric_discovery.router, prefix="", tags=["metric discovery"])
