@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from app.utils.database import get_db
+from uuid import UUID
 from app.services.metric_discovery import MetricDiscoveryService
 from app.models.models import MetricDefinition, AnalyticsConfiguration, DataSourceConnection
 from app.utils.auth import get_current_user
@@ -35,7 +36,7 @@ class MetricResponse(BaseModel):
 
 @router.post("/metrics/discover/{connection_id}", response_model=List[MetricResponse])
 async def discover_metrics(
-    connection_id: int,
+    connection_id: UUID,
     current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
@@ -64,7 +65,7 @@ async def discover_metrics(
 
 @router.get("/metrics/catalog/{connection_id}", response_model=List[MetricResponse])
 async def get_metric_catalog(
-    connection_id: int,
+    connection_id: UUID,
     current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
@@ -86,7 +87,7 @@ class AnalyticsConfigCreate(BaseModel):
 
 @router.post("/metrics/configure/{connection_id}")
 async def configure_analytics(
-    connection_id: int,
+    connection_id: UUID,
     config: AnalyticsConfigCreate,
     current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)

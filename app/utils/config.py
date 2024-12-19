@@ -1,4 +1,4 @@
-#config.py
+#backend-metric-discovery/app/utils/config.py
 from pydantic_settings import BaseSettings
 from typing import List
 from urllib.parse import quote_plus
@@ -24,11 +24,10 @@ class Settings(BaseSettings):
     # OpenAI settings
     OPENAI_API_KEY: str
 
-
+    DB_SSLMODE: str = "disable"
     @property
     def DATABASE_URL(self):
-        url = f"postgresql://{self.DB_USER}:{quote_plus(self.DB_PASSWORD)}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}?sslmode=require"
-        print(f"Constructed DATABASE_URL: {url}")
+        url = f"postgresql://{self.DB_USER}:{quote_plus(self.DB_PASSWORD)}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}?sslmode={self.DB_SSLMODE}"
         return url
 
     @property
