@@ -136,26 +136,6 @@ class SuggestedQuestion(Base):
     id = Column(Integer, primary_key=True, index=True)
     category = Column(String(50))
     question = Column(String)
-
-class WayneEnterprise(Base):
-    __tablename__ = "wayne_enterprise"
-
-    date = Column(Date, primary_key=True)
-    department = Column(String, primary_key=True)
-    product = Column(String, primary_key=True)
-    location = Column(String, primary_key=True)
-    revenue = Column(Float)
-    costs = Column(Float)
-    units_sold = Column(Integer)
-    customer_satisfaction = Column(Float)
-    marketing_spend = Column(Float)
-    new_customers = Column(Integer)
-    repeat_customers = Column(Integer)
-    website_visits = Column(Integer)
-    
-
-    def __repr__(self):
-        return f"<WayneEnterprise(date={self.date}, department={self.department}, product={self.product}, location={self.location})>"
     
 class Article(Base):
     __tablename__ = "articles"
